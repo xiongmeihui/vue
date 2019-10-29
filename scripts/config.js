@@ -1,9 +1,18 @@
+/**
+ * 配置文件
+ */
 const path = require('path')
+// buble 是个轻量的 ES2015+ 的转译器，只编译语法上的规则，不提供api垫片
 const buble = require('rollup-plugin-buble')
+// 给多层相对路径提供一个简单的同名解析，相当于 webpack 的 resolve
 const alias = require('rollup-plugin-alias')
+// 将 commonJs 模块转化成 ES6
 const cjs = require('rollup-plugin-commonjs')
+// 替换待打包文件里的一些变量，如 process在浏览器端是不存在的，需要被替换
 const replace = require('rollup-plugin-replace')
+// rollup本身不具备读取 node 模块的能力，该插件使用 node的模块解析算法来帮助寻找node_modules里的包
 const node = require('rollup-plugin-node-resolve')
+// 移除 flow types
 const flow = require('rollup-plugin-flow-no-whitespace')
 const version = process.env.VERSION || require('../package.json').version
 const weexVersion = process.env.WEEX_VERSION || require('../packages/weex-vue-framework/package.json').version
@@ -24,7 +33,7 @@ const weexFactoryPlugin = {
     return '}'
   }
 }
-
+// 同名解析路径
 const aliases = require('./alias')
 const resolve = p => {
   const base = p.split('/')[0]

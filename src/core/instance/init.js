@@ -1,5 +1,12 @@
 /* @flow */
-
+/**
+ * Vue 初始化主要就干了几件事情，
+ * 合并配置，
+ * 初始化生命周期，
+ * 初始化事件中心，
+ * 初始化渲染，
+ * 初始化 data、props、computed、watcher
+ */
 import config from '../config'
 import { initProxy } from './proxy'
 import { initState } from './state'
@@ -16,6 +23,7 @@ export function initMixin (Vue: Class<Component>) {
   Vue.prototype._init = function (options?: Object) {
     const vm: Component = this
     // a uid
+    // 每次创建一个新的 Vue 实例赋值一个 uid
     vm._uid = uid++
 
     let startTag, endTag
@@ -65,6 +73,13 @@ export function initMixin (Vue: Class<Component>) {
       measure(`vue ${vm._name} init`, startTag, endTag)
     }
 
+    /**
+     * 在初始化的最后，
+     * 检测到如果有 el 属性，
+     * 则调用 vm.$mount 方法挂载 vm，
+     * 挂载的目标就是把模板渲染成最终的 DOM
+     * $mount 这个方法的实现是和平台、构建方式都相关
+     */
     if (vm.$options.el) {
       vm.$mount(vm.$options.el)
     }

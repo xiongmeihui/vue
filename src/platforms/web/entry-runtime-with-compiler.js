@@ -14,14 +14,20 @@ const idToTemplate = cached(id => {
   return el && el.innerHTML
 })
 
+/**
+ * 先缓存原型上的 $mount 方法，再重新定义
+ */
 const mount = Vue.prototype.$mount
+
 Vue.prototype.$mount = function (
   el?: string | Element,
   hydrating?: boolean
 ): Component {
   el = el && query(el)
 
-  /* istanbul ignore if */
+  /**
+   * Vue 实例不能挂载在 body 或 html 这样的根节点上
+   */
   if (el === document.body || el === document.documentElement) {
     process.env.NODE_ENV !== 'production' && warn(
       `Do not mount Vue to <html> or <body> - mount to normal elements instead.`

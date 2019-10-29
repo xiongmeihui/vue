@@ -1,5 +1,7 @@
 /* @flow */
-
+/**
+ * 关键代码，之后的逻辑都是对 Vue 这个对象做扩展
+ */
 import Vue from 'core/index'
 import config from 'core/config'
 import { extend, noop } from 'shared/util'

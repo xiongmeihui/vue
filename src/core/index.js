@@ -3,6 +3,9 @@ import { initGlobalAPI } from './global-api/index'
 import { isServerRendering } from 'core/util/env'
 import { FunctionalRenderContext } from 'core/vdom/create-functional-component'
 
+/**
+ * 给 Vue 这个对象本身扩展全局的静态方法
+ */
 initGlobalAPI(Vue)
 
 Object.defineProperty(Vue.prototype, '$isServer', {
