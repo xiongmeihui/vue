@@ -697,6 +697,12 @@ export function createPatchFunction (backend) {
     }
   }
 
+  /**
+   * oldVnode 表示旧的 VNode 节点，它也可以不存在或者是一个 DOM 对象
+   * vnode 表示执行 _render 后返回的 VNode 的节点；
+   * hydrating 表示是否是服务端渲染；
+   * removeOnly 是给 transition-group 用的
+   */
   return function patch (oldVnode, vnode, hydrating, removeOnly) {
     if (isUndef(vnode)) {
       if (isDef(oldVnode)) invokeDestroyHook(oldVnode)
