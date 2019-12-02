@@ -122,6 +122,7 @@ export function createPatchFunction (backend) {
 
   let creatingElmInVPre = 0
 
+  // createElm 的作用是通过虚拟节点创建真实的 DOM 并插入到它的父节点中
   function createElm (
     vnode,
     insertedVnodeQueue,
@@ -207,6 +208,7 @@ export function createPatchFunction (backend) {
     }
   }
 
+  // createComponent 方法目的是尝试创建子组件
   function createComponent (vnode, insertedVnodeQueue, parentElm, refElm) {
     let i = vnode.data
     if (isDef(i)) {
@@ -717,6 +719,7 @@ export function createPatchFunction (backend) {
       isInitialPatch = true
       createElm(vnode, insertedVnodeQueue)
     } else {
+      // nodeType 存在表示 oldVnode 是个 DOM container
       const isRealElement = isDef(oldVnode.nodeType)
       if (!isRealElement && sameVnode(oldVnode, vnode)) {
         // patch existing root node
@@ -726,6 +729,7 @@ export function createPatchFunction (backend) {
           // mounting to a real element
           // check if this is server-rendered content and if we can perform
           // a successful hydration.
+          // 等于1 表示为 Node.ELEMENT_NODE
           if (oldVnode.nodeType === 1 && oldVnode.hasAttribute(SSR_ATTR)) {
             oldVnode.removeAttribute(SSR_ATTR)
             hydrating = true
