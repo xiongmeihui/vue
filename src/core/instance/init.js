@@ -37,12 +37,14 @@ export function initMixin (Vue: Class<Component>) {
     // a flag to avoid this being observed
     vm._isVue = true
     // merge options
+    // 把 Vue 上的一些 option 扩展到了 vm.$options 上
     if (options && options._isComponent) {
       // optimize internal component instantiation
       // since dynamic options merging is pretty slow, and none of the
       // internal component options needs special treatment.
       initInternalComponent(vm, options)
     } else {
+      // 把 Vue 构造函数的 options 和用户传入的 options 做一层合并
       vm.$options = mergeOptions(
         resolveConstructorOptions(vm.constructor),
         options || {},

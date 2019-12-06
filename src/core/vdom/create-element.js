@@ -101,6 +101,7 @@ export function _createElement(
   }
   let vnode, ns;
   if (typeof tag === "string") {
+    // 如果是个普通的 html 标签，实例化一个普通的 vnode 节点
     let Ctor;
     ns = (context.$vnode && context.$vnode.ns) || config.getTagNamespace(tag);
     if (config.isReservedTag(tag)) {

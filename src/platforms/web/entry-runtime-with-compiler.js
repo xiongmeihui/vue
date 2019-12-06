@@ -37,6 +37,7 @@ Vue.prototype.$mount = function (
 
   const options = this.$options
   // resolve template/el and convert to render function
+  // 优先级 render 函数 > template > el
   if (!options.render) {
     let template = options.template
     if (template) {

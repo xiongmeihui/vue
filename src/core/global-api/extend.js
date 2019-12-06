@@ -15,6 +15,10 @@ export function initExtend (Vue: GlobalAPI) {
 
   /**
    * Class inheritance
+   * 构造一个 Vue 的子类
+   * 扩展 options、添加全局 API 等
+   * 并且对配置中的 props 和 computed 做了初始化工作
+   * 最后对于这个 Sub 构造函数做了缓存，避免多次执行 Vue.extend 的时候对同一个子组件重复构造。
    */
   Vue.extend = function (extendOptions: Object): Function {
     extendOptions = extendOptions || {}
