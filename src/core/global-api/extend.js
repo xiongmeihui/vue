@@ -34,6 +34,7 @@ export function initExtend (Vue: GlobalAPI) {
       validateComponentName(name)
     }
 
+    // 构造子类
     const Sub = function VueComponent (options) {
       this._init(options)
     }
