@@ -118,6 +118,7 @@ function flushSchedulerQueue () {
 
   // call component updated and activated hooks
   callActivatedHooks(activatedQueue)
+  // updatedQueue 是更新了的 watcher 数组
   callUpdatedHooks(updatedQueue)
 
   // devtool hook

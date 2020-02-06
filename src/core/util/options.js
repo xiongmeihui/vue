@@ -54,6 +54,9 @@ function mergeData (to: Object, from: ?Object): Object {
     ? Reflect.ownKeys(from)
     : Object.keys(from)
 
+  /**
+   * 将 from 中的属性完全复制到 to 上
+   **/  
   for (let i = 0; i < keys.length; i++) {
     key = keys[i]
     // in case the object is already observed...
@@ -118,6 +121,9 @@ export function mergeDataOrFn (
   }
 }
 
+/**
+ * 合并 data 属性
+ */
 strats.data = function (
   parentVal: any,
   childVal: any,
@@ -142,6 +148,9 @@ strats.data = function (
 
 /**
  * Hooks and props are merged as arrays.
+ * 一旦 parent 和 child 都定义了相同的钩子函数，那么它们会把 2 个钩子函数合并成一个数组
+ * 如果父选项存在，必定是一个数组
+ * 注意这里如果 child 是个函数，最后会被处理成数i组
  */
 function mergeHook (
   parentVal: ?Array<Function>,
@@ -159,6 +168,7 @@ function mergeHook (
     : res
 }
 
+// 去重
 function dedupeHooks (hooks) {
   const res = []
   for (let i = 0; i < hooks.length; i++) {
@@ -260,6 +270,8 @@ strats.provide = mergeDataOrFn
 
 /**
  * Default strategy.
+ * 默认的合并策略
+ * 子选项的值覆盖父选项
  */
 const defaultStrat = function (parentVal: any, childVal: any): any {
   return childVal === undefined
@@ -428,6 +440,7 @@ export function mergeOptions (
     }
   }
   function mergeField (key) {
+    // 根据不同的 key 选择不同的合并策略
     const strat = strats[key] || defaultStrat
     options[key] = strat(parent[key], child[key], vm, key)
   }

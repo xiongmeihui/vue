@@ -126,7 +126,7 @@ export function _createElement(
       );
     } else if (
       (!data || !data.pre) &&
-      isDef((Ctor = resolveAsset(context.$options, "components", tag)))
+      isDef((Ctor = resolveAsset(context.$options, "components", tag))) // 拿到组件的构造函数
     ) {
       // component
       vnode = createComponent(Ctor, data, context, children, tag);

@@ -22,6 +22,7 @@ export function initExtend (Vue: GlobalAPI) {
    */
   Vue.extend = function (extendOptions: Object): Function {
     extendOptions = extendOptions || {}
+    // 当前的构造函数赋值为 super，根父类是 Vue
     const Super = this
     const SuperId = Super.cid
     const cachedCtors = extendOptions._Ctor || (extendOptions._Ctor = {})

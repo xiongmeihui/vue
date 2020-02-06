@@ -62,11 +62,15 @@ export function initMixin(Vue: Class<Component>) {
     initLifecycle(vm);
     initEvents(vm);
     initRender(vm);
+    // beforeCreate 的钩子函数中就不能获取到 props、data 中定义的值，也不能调用 methods 中定义的函数
     callHook(vm, "beforeCreate");
     initInjections(vm); // resolve injections before data/props
+    // initState 的作用是初始化 props、data、methods、watch、computed 等属性
     initState(vm);
     initProvide(vm); // resolve provide after data/props
     callHook(vm, "created");
+    // 一般来说，如果组件在加载的时候需要和后端有交互，放在以上俩个钩子函数执行都可以，
+    // 如果是需要访问 props、data 等数据的话，就需要使用 created 钩子函数
 
     /* istanbul ignore if */
     if (process.env.NODE_ENV !== "production" && config.performance && mark) {
@@ -112,6 +116,7 @@ export function initInternalComponent(
 }
 
 export function resolveConstructorOptions(Ctor: Class<Component>) {
+  // vm.constructor.options 相当于 Vue.options
   let options = Ctor.options;
   if (Ctor.super) {
     const superOptions = resolveConstructorOptions(Ctor.super);

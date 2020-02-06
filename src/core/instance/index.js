@@ -7,6 +7,9 @@ import { warn } from '../util/index'
 
 /**
  * 用 function 实现的类
+ * new Vue 的过程通常有 2 种场景
+ * 一种是外部我们的代码主动调用 new Vue(options) 的方式实例化一个 Vue 对象
+ * 另一种是组件创建过程中内部通过 new Vue(options) 实例化子组件
  */
 function Vue (options) {
   // 当直接以函数调用形式调用 Vue 时

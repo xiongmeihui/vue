@@ -80,6 +80,7 @@ export function lifecycleMixin(Vue: Class<Component>) {
      */
     const restoreActiveInstance = setActiveInstance(vm);
     // 这个 vnode 是通过 vm._render() 返回的组件渲染 VNode
+    // vm.$vnode（_parentVnode） 意思就是未经过 _render 函数处理的 vnode， vm._vnode 是经过 render处理过的
     // vm._vnode 和 vm.$vnode 的关系就是一种父子关系
     vm._vnode = vnode;
     // Vue.prototype.__patch__ is injected in entry points
@@ -218,12 +219,14 @@ export function mountComponent(
   // we set this to vm._watcher inside the watcher's constructor
   // since the watcher's initial patch may call $forceUpdate (e.g. inside child
   // component's mounted hook), which relies on vm._watcher being already defined
+  // 实例化一个渲染的 Watcher 去监听 vm 上的数据变化重新渲染
   new Watcher(
     vm,
     updateComponent,
     noop,
     {
       before() {
+        // 也就是在组件已经 mounted 且没有被销毁时，才会去调用这个钩子函数
         if (vm._isMounted && !vm._isDestroyed) {
           callHook(vm, "beforeUpdate");
         }
@@ -235,6 +238,7 @@ export function mountComponent(
 
   // manually mounted instance, call mounted on self
   // mounted is called for render-created child components in its inserted hook
+  // vm.$vnode 如果为 null，则表明这不是一次组件的初始化过程，而是我们通过外部 new Vue 的初始化过程
   if (vm.$vnode == null) {
     vm._isMounted = true;
     callHook(vm, "mounted");

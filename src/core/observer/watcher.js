@@ -51,6 +51,7 @@ export default class Watcher {
   ) {
     this.vm = vm
     if (isRenderWatcher) {
+      // vm._watcher 是专门用来监听 vm 上数据变化然后重新渲染的，所以它是一个渲染相关的 watcher
       vm._watcher = this
     }
     vm._watchers.push(this)

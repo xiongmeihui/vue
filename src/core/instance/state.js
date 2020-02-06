@@ -45,6 +45,9 @@ export function proxy (target: Object, sourceKey: string, key: string) {
   Object.defineProperty(target, key, sharedPropertyDefinition)
 }
 
+/**
+ * 初始化 props、data、methods、watch、computed 等属性
+ */
 export function initState (vm: Component) {
   vm._watchers = []
   const opts = vm.$options
@@ -61,6 +64,11 @@ export function initState (vm: Component) {
   }
 }
 
+/**
+ * 一是调用 defineReactive 方法把每个 prop 对应的值变成响应式，
+ * 可以通过 vm._props.xxx 访问到定义 props 中对应的属性。
+ * 二是通过 proxy 把 vm._props.xxx 的访问代理到 vm.xxx 上
+ */
 function initProps (vm: Component, propsOptions: Object) {
   const propsData = vm.$options.propsData || {}
   const props = vm._props = {}
@@ -109,6 +117,11 @@ function initProps (vm: Component, propsOptions: Object) {
   toggleObserving(true)
 }
 
+/**
+ * 一是对定义 data 函数返回对象的遍历，通过 proxy 把每一个值 vm._data.xxx 都代理到 vm.xxx 上
+ * 二是调用 observe 方法观测整个 data 的变化，把 data 也变成响应式，
+ * 可以通过 vm._data.xxx 访问到定义 data 返回函数中对应的属性，
+ */
 function initData (vm: Component) {
   let data = vm.$options.data
   data = vm._data = typeof data === 'function'

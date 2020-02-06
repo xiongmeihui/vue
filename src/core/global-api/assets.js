@@ -6,6 +6,7 @@ import { isPlainObject, validateComponentName } from '../util/index'
 export function initAssetRegisters (Vue: GlobalAPI) {
   /**
    * Create asset registration methods.
+   * 定义 Vue.component 函数
    */
   ASSET_TYPES.forEach(type => {
     Vue[type] = function (
@@ -21,6 +22,7 @@ export function initAssetRegisters (Vue: GlobalAPI) {
         }
         if (type === 'component' && isPlainObject(definition)) {
           definition.name = definition.name || id
+          // this.options._base 相当于 Vue
           definition = this.options._base.extend(definition)
         }
         if (type === 'directive' && typeof definition === 'function') {

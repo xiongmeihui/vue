@@ -64,6 +64,8 @@ const componentVNodeHooks = {
     const { context, componentInstance } = vnode;
     if (!componentInstance._isMounted) {
       componentInstance._isMounted = true;
+      // 每个子组件都是在这个钩子函数中执行 mounted 钩子函数
+      // insertedVnodeQueue 的添加顺序是先子后父，所以对于同步渲染的子组件而言，mounted 钩子函数的执行顺序也是先子后父
       callHook(componentInstance, "mounted");
     }
     if (vnode.data.keepAlive) {
