@@ -85,6 +85,7 @@ function flushSchedulerQueue () {
 
   // do not cache length because more watchers might be pushed
   // as we run existing watchers
+  // 遍历队列
   for (index = 0; index < queue.length; index++) {
     watcher = queue[index]
     if (watcher.before) {
@@ -164,6 +165,7 @@ function callActivatedHooks (queue) {
  */
 export function queueWatcher (watcher: Watcher) {
   const id = watcher.id
+  // 用 has 对象保证同一个 Watcher 只添加一次
   if (has[id] == null) {
     has[id] = true
     if (!flushing) {
@@ -178,6 +180,7 @@ export function queueWatcher (watcher: Watcher) {
       queue.splice(i + 1, 0, watcher)
     }
     // queue the flush
+    // 通过 waiting 保证对 nextTick(flushSchedulerQueue) 的调用逻辑只有一次
     if (!waiting) {
       waiting = true
 

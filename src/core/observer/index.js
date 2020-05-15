@@ -195,6 +195,7 @@ export function defineReactive(
         val = newVal;
       }
       childOb = !shallow && observe(newVal);
+      // 通知所有订阅者
       dep.notify();
     }
   });

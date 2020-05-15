@@ -69,8 +69,8 @@ export default class Watcher {
     this.id = ++uid // uid for batching
     this.active = true
     this.dirty = this.lazy // for lazy watchers
-    this.deps = []
-    this.newDeps = []
+    this.deps = [] //  表示 Watcher 实例持有的 Dep 实例的数组
+    this.newDeps = [] //  表示 Watcher 实例持有的 Dep 实例的数组
     this.depIds = new Set()
     this.newDepIds = new Set()
     this.expression = process.env.NODE_ENV !== 'production'
@@ -114,6 +114,7 @@ export default class Watcher {
     } finally {
       // "touch" every property so they are all tracked as
       // dependencies for deep watching
+      // 递归去访问 value，触发它所有子项的 getter
       if (this.deep) {
         traverse(value)
       }
@@ -132,6 +133,8 @@ export default class Watcher {
       this.newDepIds.add(id)
       this.newDeps.push(dep)
       if (!this.depIds.has(id)) {
+        // 当前的 watcher 订阅到这个数据持有的 dep 的 subs 中，
+        // 这个目的是为后续数据变化时候能通知到哪些 subs 做准备
         dep.addSub(this)
       }
     }
